@@ -19,12 +19,9 @@ To install the application, follow these steps:
 
 ## Demonstration 
 ![preview](https://user-images.githubusercontent.com/105900114/235374619-5bcbf69f-96c6-436b-8104-680ff675cea6.png)
-![preview2](https://user-image
+![preview2](https://user-images.githubusercontent.com/105900114/235374622-bcf4be71-ff04-4f4f-9d70-de389c686b05.png)
 
 https://user-images.githubusercontent.com/105900114/235374643-a5709bf6-fb81-4090-b0d5-2ae859d2f431.mp4
-
-s.githubusercontent.com/105900114/235374622-bcf4be71-ff04-4f4f-9d70-de389c686b05.png)
-
 
 ## Technologies used
 - CSS
