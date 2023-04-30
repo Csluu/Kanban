@@ -9,13 +9,12 @@ This project is a simple Kanban board implementation. Kanban is a popular agile 
 - Lock down the movement of the application to prevent accidental movement 
 
 ## Installation
-You can download the latest release of the Kanban board by visiting the Releases section of this repository. Here, you will find the latest version of the application, as well as previous versions if needed.
+You can download the latest release of the Kanban board by visiting the [Releases](https://github.com/Csluu/Kanban/releases) section of this repository. Here, you will find the latest version of the application, as well as previous versions if needed.
 
 To install the application, follow these steps:
 - 1 - Download the version of the application that is compatible with your operating system.
 - 2 - Unzip the downloaded file to a location of your choice.
-- 3A - For Windows run "Kanban Setup.exe"
-- 3B - For Linux run "Kanban.AppImage"
+- 3 - Run "KanbanSetup-Windows.exe" if you are on windows 
 
 ## Demonstration 
 ![preview](https://user-images.githubusercontent.com/105900114/235374619-5bcbf69f-96c6-436b-8104-680ff675cea6.png)
