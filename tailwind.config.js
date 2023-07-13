@@ -22,6 +22,7 @@ module.exports = {
 				edge: "inset 0px 0px 2px rgba(87,88,89,1)",
 			},
 		},
+		fontFamily: { quicksand: ["Quicksand", "sans-serif"] },
 		pointerEvents: {
 			auto: "auto",
 			none: "none",

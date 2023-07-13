@@ -2,13 +2,11 @@ const draggables = document.querySelectorAll(".card");
 const droppables = document.querySelectorAll(".swim-lane");
 const form1 = document.getElementById("todo-form1");
 const form2 = document.getElementById("todo-form2");
-const form3 = document.getElementById("todo-form3");
 const todoLane1 = document.getElementById("todo-lane1");
 const todoLane2 = document.getElementById("todo-lane2");
-const todoLane3 = document.getElementById("todo-lane3");
 
 function saveKanbanData() {
-	const lanesData = [todoLane1, todoLane2, todoLane3].map((lane) => {
+	const lanesData = [todoLane1, todoLane2].map((lane) => {
 		const cards = Array.from(lane.querySelectorAll(".card-text"));
 		return cards.map((card) => card.innerText);
 	});
@@ -22,7 +20,7 @@ function loadKanbanData() {
 	if (savedData) {
 		const lanesData = JSON.parse(savedData);
 
-		[todoLane1, todoLane2, todoLane3].forEach((lane, laneIndex) => {
+		[todoLane1, todoLane2].forEach((lane, laneIndex) => {
 			lanesData[laneIndex].forEach((cardText) => {
 				createKanbanCard(lane, cardText, true);
 			});
@@ -72,24 +70,15 @@ toggleDropDown(
 	document.getElementById("menu-2")
 );
 
-toggleDropDown(
-	document.getElementById("drop-down-3"),
-	document.getElementById("menu-3")
-);
-
 function toggleLock() {
 	const menuLock1 = document.getElementById("lock-menu-1");
 	const menuLock2 = document.getElementById("lock-menu-2");
-	const menuLock3 = document.getElementById("lock-menu-3");
 	const container = document.getElementById("body");
 
 	menuLock1.addEventListener("click", () => {
 		container.classList.toggle("no-drag");
 	});
 	menuLock2.addEventListener("click", () => {
-		container.classList.toggle("no-drag");
-	});
-	menuLock3.addEventListener("click", () => {
 		container.classList.toggle("no-drag");
 	});
 }
@@ -234,7 +223,6 @@ function attachSubmitListener(form, todoLane) {
 
 attachSubmitListener(form1, todoLane1);
 attachSubmitListener(form2, todoLane2);
-attachSubmitListener(form3, todoLane3);
 
 loadKanbanData();
 toggleLock();

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,11 +18,12 @@
 	::-webkit-scrollbar {
 		display: none;
 	}
+	@apply font-quicksand font-medium bg-transparent;
 }
 
 @layer components {
 	.body {
-		@apply flex flex-row place-content-center mt-2 justify-center;
+		@apply flex flex-row place-content-center justify-center;
 		-webkit-app-region: drag;
 	}
 
@@ -28,7 +31,7 @@
 		@apply flex flex-row justify-start  place-items-start w-full h-auto rounded-xl no-drag flex-wrap bg-block-gray text-gray-200 shadow-md shadow-slate-950 focus:outline-none pb-6;
 	}
 	.container {
-		@apply flex flex-col w-full h-fit max-h-[625px] bg-clear-dark-gray rounded-3xl border-[1px] border-black shadow-border px-4 pb-8 gap-2;
+		@apply flex flex-col w-full h-fit max-h-[625px] bg-clear-dark-gray rounded-3xl border-[1px] border-black shadow-border px-5 pb-8 gap-2;
 	}
 	.swim-lane {
 		@apply flex flex-col w-full h-fit min-h-[100px] gap-4 p-2 no-drag;
