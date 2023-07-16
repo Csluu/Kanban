@@ -1,7 +1,8 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, globalShortcut } = require("electron");
+const Store = require("electron-store");
 const currentWindow = require("electron").BrowserWindow.getFocusedWindow();
 const path = require("path");
 
@@ -11,11 +12,17 @@ const isDev = process.env.NODE_ENV !== "production";
 const isMac = process.platform === "darwin";
 const isWin = process.platform === "win32";
 
+const store = new Store();
+
 let mainWindow;
 
 const createMainWindow = () => {
+	let { x, y } = store.get("windowPosition", { x: undefined, y: undefined });
+
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
+		x,
+		y,
 		width: isDev ? 1500 : 855,
 		height: 675,
 		transparent: true,
@@ -39,6 +46,39 @@ const createMainWindow = () => {
 
 	// and load the index.html of the app.
 	mainWindow.loadFile(path.join(__dirname, "./Renderer/index.html"));
+
+	// // Makes it so that the application doesn't zoom in or out. Other ways to do this are deprecated or don't work
+	// // Will leave this out as it is helpful right now for people with smaller screen sizes. 
+	// mainWindow.on("focus", () => {
+	// 	globalShortcut.register("CommandOrControl+0", () => {
+	// 		return;
+	// 	});
+	// 	globalShortcut.register("CommandOrControl+plus", () => {
+	// 		return;
+	// 	});
+	// 	globalShortcut.register("CommandOrControl+=", () => {
+	// 		return;
+	// 	});
+	// 	globalShortcut.register("CommandOrControl+-", () => {
+	// 		return;
+	// 	});
+	// 	globalShortcut.register("CommandOrControl+_", () => {
+	// 		return;
+	// 	});
+	// });
+	// mainWindow.on("blur", () => {
+	// 	globalShortcut.unregister("CommandOrControl+0");
+	// 	globalShortcut.unregister("CommandOrControl+plus");
+	// 	globalShortcut.unregister("CommandOrControl+=");
+	// 	globalShortcut.unregister("CommandOrControl+-");
+	// 	globalShortcut.unregister("CommandOrControl+_");
+	// });
+
+	// Save window position when the window is closed.
+	mainWindow.on("close", () => {
+		let { x, y } = mainWindow.getBounds();
+		store.set("windowPosition", { x, y });
+	});
 
 	// Open the DevTools.
 	// mainWindow.webContents.openDevTools()
