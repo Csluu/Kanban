@@ -8,6 +8,10 @@
 	-webkit-app-region: no-drag;
 }
 
+.yes-drag {
+	-webkit-app-region: drag;
+}
+
 *::-webkit-scrollbar {
 	display: none;
 }
@@ -24,7 +28,6 @@
 @layer components {
 	.body {
 		@apply flex flex-row place-content-center justify-center;
-		-webkit-app-region: drag;
 	}
 
 	.card {
@@ -37,7 +40,7 @@
 		@apply flex flex-col w-full h-fit min-h-[100px] gap-4 p-2 no-drag;
 	}
 	.drop-menu {
-		@apply fixed z-10 divide-y divide-dark-gray-highlight rounded-xl shadow-border bg-opaque-dark-gray w-36 mt-8 translate-x-[-55px] no-drag;
+		@apply no-drag fixed z-10 mt-8 w-36 translate-x-[-55px] divide-y divide-dark-gray-highlight rounded-xl border-[1px] border-black bg-opaque-dark-gray shadow-border;
 	}
 	.card-text {
 		@apply w-full px-6 h-auto outline-none;

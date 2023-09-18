@@ -224,5 +224,79 @@ function attachSubmitListener(form, todoLane) {
 attachSubmitListener(form1, todoLane1);
 attachSubmitListener(form2, todoLane2);
 
+function toggleLock() {
+	const menuLock1 = document.getElementById("lock-menu-1");
+	const menuLock2 = document.getElementById("lock-menu-2");
+	const lockIcon = document.getElementById("lock-icon");
+	const taskContainer = document.getElementById("taskBody");
+	const progressContainer = document.getElementById("progressBody");
+	const lockText = document.getElementById("lock-text");
+	const lockText2 = document.getElementById("lock-text-2");
+
+	const lockedPath =
+		"M6 22q-.825 0-1.413-.588T4 20V10q0-.825.588-1.413T6 8h1V6q0-2.075 1.463-3.538T12 1q2.075 0 3.538 1.463T17 6v2h1q.825 0 1.413.588T20 10v10q0 .825-.588 1.413T18 22H6Zm6-5q.825 0 1.413-.588T14 15q0-.825-.588-1.413T12 13q-.825 0-1.413.588T10 15q0 .825.588 1.413T12 17ZM9 8h6V6q0-1.25-.875-2.125T12 3q-1.25 0-2.125.875T9 6v2Z";
+	const unlockedPath =
+		"M6 8h9V6q0-1.25-.875-2.125T12 3q-1.25 0-2.125.875T9 6H7q0-2.075 1.463-3.538T12 1q2.075 0 3.538 1.463T17 6v2h1q.825 0 1.413.588T20 10v10q0 .825-.588 1.413T18 22H6q-.825 0-1.413-.588T4 20V10q0-.825.588-1.413T6 8Zm6 9q.825 0 1.413-.588T14 15q0-.825-.588-1.413T12 13q-.825 0-1.413.588T10 15q0 .825.588 1.413T12 17Z";
+
+	function handleLockClick() {
+		const currentPath = lockIcon.getAttribute("d");
+
+		if (currentPath === lockedPath) {
+			lockIcon.setAttribute("d", unlockedPath);
+			lockText.innerHTML = "Unlock";
+			lockText2.innerHTML = "Unlock";
+		} else {
+			lockIcon.setAttribute("d", lockedPath);
+			lockText.innerHTML = "Lock";
+			lockText2.innerHTML = "Lock";
+		}
+
+		taskContainer.classList.toggle("yes-drag");
+		progressContainer.classList.toggle("yes-drag");
+	}
+
+	menuLock1.addEventListener("click", handleLockClick);
+	menuLock2.addEventListener("click", handleLockClick);
+}
+
+["menu-1", "menu-2"].forEach((buttonId) => {
+	document.getElementById(buttonId).addEventListener("click", function (event) {
+		// Assuming the menu IDs are the button IDs without the "show-" prefix.
+		const menuId = buttonId.replace("show-", "");
+		document.getElementById(menuId).classList.remove("hidden");
+		event.stopPropagation();
+	});
+});
+
+function checkForMenuHide(event) {
+	// The element that was clicked
+	const clickedElement = event.target;
+
+	// An array containing the IDs of all menus you want to manage
+	const menuIds = ["drop-down-1", "drop-down-2"];
+
+	// Loop through each menu ID
+	menuIds.forEach((menuId) => {
+		// Get the menu element by its ID
+		const menu = document.getElementById(menuId);
+
+		// Check if the clicked element is inside the menu or is the menu itself
+		const isInsideMenu =
+			menu.contains(clickedElement) || menu === clickedElement;
+
+		if (!isInsideMenu) {
+			// If the click was outside the menu, hide it
+			menu.classList.add("hidden");
+		}
+	});
+}
+// Attach the function to the document
+document.addEventListener("click", checkForMenuHide);
+
 loadKanbanData();
 toggleLock();
+
+document.addEventListener("copy", function (e) {
+	e.clipboardData.setData("text/plain", window.getSelection().toString());
+	e.preventDefault(); // We want our data, not data from any selection, to be written to the clipboard
+});
