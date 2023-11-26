@@ -48,7 +48,7 @@ const createMainWindow = () => {
 	mainWindow.loadFile(path.join(__dirname, "./Renderer/index.html"));
 
 	// // Makes it so that the application doesn't zoom in or out. Other ways to do this are deprecated or don't work
-	// // Will leave this out as it is helpful right now for people with smaller screen sizes. 
+	// // Will leave this out as it is helpful right now for people with smaller screen sizes.
 	// mainWindow.on("focus", () => {
 	// 	globalShortcut.register("CommandOrControl+0", () => {
 	// 		return;
@@ -86,21 +86,41 @@ const createMainWindow = () => {
 	// Get the button element
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
-	createMainWindow();
+// * App Initialization
+// Request single instance lock
+// Making sure if there is another instance of this application or not.
 
-	// Remove mainWindow from memory on close to prevent memory leak
-	mainWindow.on("closed", () => (mainWindow = null));
+const gotTheLock = app.requestSingleInstanceLock();
 
-	app.on("activate", () => {
-		if (BrowserWindow.getAllWindows().length === 0) {
-			createMainWindow();
+if (!gotTheLock) {
+	// If there is another instance running quit this new instance
+	console.log("Application is already running");
+	app.quit();
+} else {
+	app.on("second-instance", (event, commandLine, workingDirectory) => {
+		// Someone tried to run a second instance, we should focus our window
+		if (mainWindow) {
+			if (mainWindow.isMinimized()) mainWindow.restore();
+			mainWindow.focus();
 		}
 	});
-});
+
+	// This method will be called when Electron has finished
+	// initialization and is ready to create browser windows.
+	// Some APIs can only be used after this event occurs.
+	app.whenReady().then(() => {
+		createMainWindow();
+
+		// Remove mainWindow from memory on close to prevent memory leak
+		mainWindow.on("closed", () => (mainWindow = null));
+
+		app.on("activate", () => {
+			if (BrowserWindow.getAllWindows().length === 0) {
+				createMainWindow();
+			}
+		});
+	});
+}
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
