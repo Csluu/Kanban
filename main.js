@@ -2,6 +2,7 @@
 
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain, globalShortcut } = require("electron");
+const contextMenu = require("electron-context-menu");
 const Store = require("electron-store");
 const currentWindow = require("electron").BrowserWindow.getFocusedWindow();
 const path = require("path");
@@ -15,6 +16,13 @@ const isWin = process.platform === "win32";
 const store = new Store();
 
 let mainWindow;
+
+contextMenu({
+	spellChecker: true,
+	showSearchWithGoogle: false,
+	showCopyImage: false,
+	showSaveImageAs: false,
+});
 
 const createMainWindow = () => {
 	let { x, y } = store.get("windowPosition", { x: undefined, y: undefined });
@@ -33,6 +41,7 @@ const createMainWindow = () => {
 			: path.join(__dirname, "./Renderer/assets/icons/icon.png"),
 		webPreferences: {
 			// Set this to false when in production
+			spellcheck: true,
 			devTools: false,
 			nodeIntegration: true,
 			contextIsolation: true,
